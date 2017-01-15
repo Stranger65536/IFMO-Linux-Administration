@@ -1,0 +1,12 @@
+disk /dev/sda; n (new partition) -> p (primary) -> default (start block) -> +500M (end block) -> w (write changes); reboot;
+mkfs.ext3 -b 1024 /dev/sda4
+dumpe2fs -h /dev/sda4
+tune2fs -c 2 -i 2m /dev/sda4
+mkdir /mnt/newdisk && mount /dev/sda4
+ln -s /mnt/newdisk ~/newdisk
+mkdir ~/newdisk/dir
+echo "$(sudo blkid /dev/sda4 | cut -d' ' -f2) /mnt/newdisk ext3 noexec,noatime 0 0" >> /etc/fstab
+umount /dev/sda4 && fdisk /dev/sda; d (delete partition) -> default (partition to delete) -> n -> p -> default -> +1G -> w; reboot; resize2fs /dev/sda4 && df -H
+fsck -n /dev/sda4
+mkdir /mnt/share && mount //STRANGERONE/d /mnt/share -o username=stranger,password=Soel5quexoni
+echo "//STRANGERONE/d /mnt/share cifs rw,username=stranger,password=Soel5quexoni 0 0" >> /etc/fstab && reboot

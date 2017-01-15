@@ -1,0 +1,8 @@
+ yum -y install gcc make ncurses-devel
+ tar -xvf bastet-0.41.tgz && cd bastet-0.41 && make && make install && ./bastet && cd ..
+ yum list installed >> task3.log
+ yum deplist gcc >> task4.log
+ mkdir /root/localrepo && cp checkinstall-1.6.1-1.i386.rpm /root/localrepo/ && createrepo --database /root/localrepo && echo -e "[localrepo]\nname=localrepo\nbaseurl=file:///root/localrepo\nenabled=1\ngpgcheck=0" >> /etc/yum.repos.d/localrepo.repo
+ yum repolist enabled >> task6.log
+ cd /etc/yum.repos.d/ && for filename in $(ls | grep -v localrepo.repo); do mv "$filename" "$filename.broken"; done; && yum clean all && yum list available
+ cd /home/trofiv && alien -r fortunes-ru_1.52-2_all.deb && rpm -i --force fortunes-ru-1.52-3.noarch.rpm
